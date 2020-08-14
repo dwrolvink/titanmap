@@ -1,0 +1,203 @@
+<html>
+	<head>
+		<title>Menu of Titans</title>
+		<meta charset="UTF-8">
+		<script src="config.js"></script>
+
+
+		<style>
+			#mainCanvas {
+				border:1px solid #d3d3d3;
+				background-color:rgba(31,48,106,1);
+				/* background-color:rgb(252, 70, 212) */
+			}
+			body {
+				margin:0px;
+				padding: 0px;
+				
+				font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+				font-size: 10pt;
+			}
+
+			canvas {
+				margin:0px;
+			}
+
+
+			#objectEditPane {
+				visibility: hidden;
+				position: absolute;
+				right: 0px;
+				top: 500px;
+				padding:10px;
+				border: 1px solid gray;
+				background-color:rgb(29, 29, 37);
+				color:white;
+			}
+
+
+			#pageSettings {
+				visibility: hidden;
+				position: absolute;
+				left: 0px;
+				top: 100px;
+				padding:10px;
+				border: 1px solid gray;
+				background-color:rgb(29, 29, 37);
+				color:white;
+			}			
+
+			.inputrow {
+				width:260px;
+			}
+			label {
+				padding-top:7px;
+				display: inline-block;
+			}
+
+			table {
+				color: white;
+
+			}
+			.namecol {
+				
+				padding-right:10px;
+			}
+			.nudge {
+				width: 10px;
+			}
+		</style>
+	</head>
+	<body>
+
+	
+
+		<canvas id="mainCanvas" width="1600" height="3600">
+		Your browser does not support the canvas element.
+		</canvas>
+
+		<div style="display:none;">
+			<img id="map_img" src="img/map.png" width="1686" height="1690">
+			<img id="amanita_img" src="img/amanita.png" width="99" height="90">
+			<img id="tigernut_img" src="img/tigernut.png" width="99" height="90">
+			<img id="acorn_img" src="img/acorn.png" width="99" height="90">
+			<img id="button_img" src="img/button.png" width="99" height="90">
+			<img id="lychee_img" src="img/lychee.png" width="99" height="90">
+			<img id="milkcap_img" src="img/milkcap.png" width="99" height="90">
+			<img id="root_img" src="img/root.png" width="99" height="90">
+		</div>
+
+		<div id="pageSettings" >
+			<table>
+				<tr>
+					<td class="namecol"><label>Coordinate String</label></td>
+					<td><input type="text" value="" id="page_coord"></td>
+				</tr><tr>
+					<td class="namecol"><label>Typer</label></td>
+					<td>
+						<select id="page_type" class="select">
+							<option value="amanita">amanita</option>	
+							<option value="tigernut">tigernut</option>
+							<option value="acorn">acorn</option>
+							<option value="button">button</option>
+							<option value="lychee">lychee</option>
+							<option value="milkcap">milk cap</option>	
+							<option value="root">root</option>						
+						</select>
+					</td>
+				</tr><tr>
+					<td>
+						<input type="submit" value="Add" id="add_map_marker" />
+					</td>
+				</tr>	
+			</table>
+		</div>	
+
+		<div id="objectEditPane" >
+
+			<table>
+				<tr>
+					<td class="namecol"><label>Text</label></td>
+					<td><textarea id="text" class="input" style="height:100px; width:100%"></textarea></td>
+				</tr><tr>
+					<td class="namecol"><label>Size</label></td>
+					<td>
+						<input type="text" id="size" class="input">
+						<input type="submit" id="+size" class="nudge" value="+">
+						<input type="submit" id="-size" class="nudge" value="-">
+					</td>
+				</tr><tr>
+					<td class="namecol"><label>bgcolor</label></td>
+					<td><input type="text" value="rgba(40,170,255,0.5)" data-jscolor="" id="bgcolor" class="input"></td>
+				</tr><tr>
+					<td class="namecol"><label>Text color</label></td>
+					<td><input type="text" value="rgba(40,170,255,0.5)" data-jscolor="" id="textcolor" class="input"></td>
+				</tr><tr>
+					<td class="namecol"><label>Border color</label></td>
+					<td><input type="text" value="rgba(40,170,255,0.5)" data-jscolor="" id="bordercolor" class="input"></td>
+				</tr><tr>
+					<td class="namecol"><label>Border thickness</label></td>
+					<td>
+						<input type="text" id="border_thickness" class="input">
+						<input type="submit" id="+border_thickness" class="nudge" value="+">
+						<input type="submit" id="-border_thickness" class="nudge" value="-">
+					</td>
+				</tr><tr>
+					<td class="namecol"><label>Textsize</label></td>
+					<td>
+						<input type="text" id="textsize" class="input">
+						<input type="submit" id="+textsize" class="nudge" value="+">
+						<input type="submit" id="-textsize" class="nudge" value="-">
+					</td>
+				</tr><tr>
+					<td class="namecol"><label>Boxarrow</label></td>
+					<td>
+						<select id="draw_arrow" class="select">
+							<option value="none">None</option>
+							<option value="left">Left</option>
+							<option value="right">Right</option>
+							<option value="left_narrow">Left (narrow)</option>
+							<option value="right_narrow">Right (narrow)</option>
+							<option value="left_down">Left (down)</option>							
+						</select>
+					</td>
+				</tr><tr>
+					<td class="namecol"><label>Border-radius</label></td>
+					<td>
+						<input type="text" id="border_radius" class="input">
+					</td>
+				</tr><tr>
+					<td class="namecol"><label>Text Align</label></td>
+					<td>
+						<select id="text_align" class="select">
+							<option value="top-left">Top Left</option>
+							<option value="top-center">Top Center</option>				
+						</select>
+					</td>
+				</tr>
+			</table>
+		</div>
+
+		<script src="modules/helperfuncs.js" ></script>
+		
+		<script src="modules/graphics.js"></script>		
+
+		<script src="modules/interface.js" ></script>
+		<script src="modules/object.manager.js"></script>
+		<script src="modules/eventmanager.js"></script>
+
+		<!-- Object types -->
+		<script src="classes/rectangle.js"></script>
+
+		<!-- Main start-off point -->
+		<script src="main.js"></script>
+
+		<!-- Load diagram -->
+		<script src="sets/save_file.js"></script>
+
+		<!-- Load plugins/external libraries -->		
+		<script src="ext/jscolor/jscolor.js"></script>
+
+
+	</body>
+</html>
