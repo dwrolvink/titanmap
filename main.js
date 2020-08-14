@@ -2,11 +2,16 @@
 // ----------------------------------------------------------
 var canvas = document.getElementById("mainCanvas");
 var ctx = canvas.getContext("2d");
+var eventmgmt = {};
+var viewport = {};
+
 
 // Main list of drawable Objects
 var ObjectList = new ObjectManager();
 var Clipboard  = new ObjectManager();
 
+// Load setup
+ObjectList.LoadSavedSetup();
 
 
 // SET EVENTS

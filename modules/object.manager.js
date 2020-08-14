@@ -10,7 +10,7 @@ class ObjectManager
 	// This function gets all selected objects
 	GetAllSelectedObjects() {
 		let list = [];
-		for (obj of this.objects){
+		for (let obj of this.objects){
 			if (obj.selected){
 				list.push(obj);
 			}
@@ -186,16 +186,19 @@ class ObjectManager
 		}
 
 		let output = ""
-		let template = ''
+		let code = ""
 
-		// export eventmgmt
-		output +=  `let eventmgmt_json = \`${JSON.stringify(eventmgmt)}\`; 
+		// export main state
+		code +=    `let eventmgmt_json = \`${JSON.stringify(eventmgmt)}\`; 
 					eventmgmt = JSON.parse(eventmgmt_json);
 					let viewport_json = \`${JSON.stringify(viewport)}\`;
 					viewport = JSON.parse(viewport_json);
+
+					var obj;
 		
 		`
 
+		let template = ''
 		// export objects
 		for (obj of this.objects)
 		{
@@ -218,32 +221,29 @@ class ObjectManager
 				obj.center = "${obj.center}";
 				
 				`
-			output += template
+			code += template
 		}
 
 		// remove tabs from string
 		let tab = RegExp("\\t", "g");
-		output = output.replace(tab, '')
+		code = code.replace(tab, '');
+
+
+		// Now we have our code, wrap it in a function so we can call it at command
+		let lines = code.split('\n');
+		output = "function LoadSavedState(){\n";
+		for (line of lines){
+			output += "\t" + line + "\n"
+		}
+		output += "}"
 
 		return output;
 	}
 
-	SaveCurrentSetup() {
-		let text = this.PrintCurrentSetup()
 
-		// download file option
-		/*
-		var element = document.createElement('a');
-		element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
-		element.setAttribute('download', filename);
-		
-		element.style.display = 'none';
-		document.body.appendChild(element);
-		
-		element.click();
-		
-		document.body.removeChild(element);
-		*/
+	SaveCurrentSetup() {
+
+		let text = this.PrintCurrentSetup()
 
 		localStorage.setItem('save_game', text);
 		  	
@@ -267,20 +267,23 @@ class ObjectManager
 		  	
 	}	
 
-	LoadSavedSetup(){
-		// no saved game, caller needs to populate the map themselves
+
+	LoadSavedSetup()
+	{
+
+		// no saved game, use the predefined state
 		if (localStorage.getItem('save_game') == null){
-			return false
+			LoadSavedState();
+			return true;
 		}
 
-		// clear list
-		this.objects = [];
+		// Load function
+		eval(localStorage.getItem('save_game')+"LoadSavedState(); console.log(LoadSavedState);");
 
-		// populate
-		eval(localStorage.getItem('save_game'));
+
 
 		return true;
-	}
+	}	
 	
 
 }
