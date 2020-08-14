@@ -553,6 +553,5 @@ function PrintImage_callback(){
 	UpdateScreen();
 
 	// Open saved image in new screen
-	let win = window.open(image, '_blank');
-	win.focus();
+	window.open(image, '_blank');
 }
