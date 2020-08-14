@@ -359,18 +359,31 @@ function PrintInfo(){
 	ctx.fillStyle   = 'white';
 
 	// placement
-	let l = 1; let lh = 20; left = canvas.width - 200;
+	let l = 1; let lh = 20; left = canvas.width - 250;
 
 	// text
 	ctx.fillStyle   = 'rgba(171,255,0,1)';
-	ctx.fillText('https://github.com/dwrolvink/flod', left, l*lh); l+=2; 
+	ctx.fillText('https://github.com/dwrolvink/titanmap', left, l*lh); l++; 
+	ctx.fillStyle   = 'white';
+	ctx.fillText('Press H to toggle help text    ', left, l*lh); l+=2;	
 
 	if (eventmgmt.persistent_choices.force_pan){
 		ctx.fillStyle   = 'rgba(231,206,0,1)';
-		ctx.fillText('Press I to edit this diagram! ', left, l*lh); l+=2; 
-		
+		ctx.fillText('Press I to turn on edit mode! ', left, l*lh); l+=2; 
+	} else {
+		ctx.fillText('Press I to exit edit mode ', left, l*lh); l+=2; 
 	}
 
+	ctx.fillStyle   = 'white';
+
+	ctx.fillText('Press Q to add locations ', left, l*lh); l++;
+	
+	ctx.font = '10px Arial';
+	ctx.fillStyle   = 'gray'; 
+	ctx.fillText('Example coordinate string: ', left, l*lh); l++;
+	ctx.fillText('(X=-45351.632813,Y=164025.171875,Z=291.165466)', left, l*lh); l+=2;
+
+	ctx.font = '12px Arial';
 	ctx.fillStyle   = 'white';
 
 	ctx.fillText('Scroll: zoom              ', left, l*lh); l++;
@@ -385,9 +398,11 @@ function PrintInfo(){
 	ctx.fillText('Drag object to move it    ', left, l*lh); l++;
 	ctx.fillText('Selected objects move together    ', left, l*lh); l+=2;
 
+	ctx.fillText('Press E to deselect all objects   ', left, l*lh); l++;
+	ctx.fillText('Press Esc to close all panes & empty clipboard', left, l*lh); l+=2;
+
 	ctx.fillText('Press G to toggle grid    ', left, l*lh); l++;
-	ctx.fillText('Press Q to page settings   ', left, l*lh); l++;
-	ctx.fillText('Press H to toggle help text    ', left, l*lh); l+=2;
+	
 
 	ctx.fillText('Press N for new object    ', left, l*lh); l++;
 	ctx.fillText('Click object to (de)select', left, l*lh); l++;

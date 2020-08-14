@@ -72,8 +72,14 @@ function OnCanvasKeyUp(event) {
 		case 17:
 			eventmgmt.pressed.ctrl = false;
 			break;	
-		case 27:
-			Clipboard = [];
+		case 27: // esc
+			
+			// clear all
+			Clipboard.objects = [];
+			CloseObjectEditPane();
+			document.getElementById("pageSettings").style.visibility = "hidden";
+			ObjectList.DeselectAllObjects([]);
+
 			break;
 		case 66: // B
 			ObjectList.BringSelectedObjectToBack();
