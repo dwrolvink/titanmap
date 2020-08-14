@@ -491,6 +491,10 @@ function AddMapMarker(){
 	let type_el = document.getElementById('page_type');
 
 	let coords = ConvertCoordinates(coord_el.value);
+
+	if (coords == false){
+		return
+	}
 	
 	obj = newRect(ObjectList.objects);
 	obj.width = 2;
@@ -518,6 +522,10 @@ function ConvertCoordinates(coord_string){
 
 	let x = coords[0] * x_ratio;
 	let y = coords[1] * y_ratio;
+
+	if (Number.isNaN(x) || Number.isNaN(y)){
+		return false;
+	}
 
 	return [x, y];
 }

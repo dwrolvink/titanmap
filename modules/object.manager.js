@@ -74,6 +74,10 @@ class ObjectManager
 
 		for (obj of this.objects) 
 		{
+			if (obj.locked){
+				continue;
+			}
+
 			let obj_rect = obj.absrect;
 			let x = obj_rect.x1;
 			let y = obj_rect.y1;
@@ -278,10 +282,8 @@ class ObjectManager
 		}
 
 		// Load function
-		eval(localStorage.getItem('save_game')+"LoadSavedState(); console.log(LoadSavedState);");
-
-
-
+		eval(localStorage.getItem('save_game')+"LoadSavedState();");
+		
 		return true;
 	}	
 	
