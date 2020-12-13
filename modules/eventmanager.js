@@ -244,6 +244,7 @@ function OnCanvasLMBU(event)
 	}
 
 	// case: selecting with ctrl (rect)
+	eventmgmt.selectionrect = null;
 	if (obj_manipulation_is_on) 
 	{
 		if (eventmgmt.selectionrect != null) 
@@ -253,7 +254,7 @@ function OnCanvasLMBU(event)
 			}
 			ObjectList.SelectObjectsByRect(eventmgmt.selectionrect);
 			RefreshObjectEditPane()
-			eventmgmt.selectionrect = null;
+			
 			return;
 		}
 	}
